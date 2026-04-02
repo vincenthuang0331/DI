@@ -1,11 +1,11 @@
 # InfraStack.Utility.Dependency
 
-輕量級依賴注入工具庫，支援屬性/ readonly 注入。
+輕量級依賴注入工具庫，支援 getter-only property / readonly field 注入。
 
 ## 功能特點
 
-- **修飾詞 readonly 注入**：支援 `readonly` 字段的自動注入
-- **屬性注入**：支援只讀屬性的自動注入
+- **修飾詞 readonly 注入**：支援 `readonly` field 自動注入
+- **getter-only property 注入**：支援只有 getter 的 property 的自動注入
 
 ## 安裝
 
@@ -68,7 +68,7 @@ var service = DependencyInjector.Resolve<IMyService>();
 ### DependencyInjector (靜態類)
 
 - `SetRegistration(IRegistration)` - 設置容器實現
-- `Inject(object)` - 對對象執行字段注入
+- `Inject(object)` - 注入 object 的 readonly field 或是 getter-only property
 - `Resolve<T>()` - 解析類型 T 的實例
 - `Resolve(Type)` - 解析指定類型的實例
 - `IsContainerRegistered` - 檢查容器是否已設置
