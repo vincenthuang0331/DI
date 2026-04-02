@@ -1,0 +1,48 @@
+name: Publish NuGet Package
+
+on:
+  push:
+    tags:
+      - 'v*'  # 當推送 v 開頭的 tag 時觸發 (例如: v1.0.0)
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      
+    - name: Run tests
+      run: dotnet test --configuration Release --no-build --verbosity normal
+      
+    - name: Extract version from tag
+      id: get_version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+      
+    - name: Pack NuGet package
+      run: dotnet pack InfraStack.Utility.Dependency/InfraStack.Utility.Dependency.csproj --configuration Release --no-build -p:PackageVersion=${{ steps.get_version.outputs.VERSION }} --output ./artifacts
+      
+    - name: Publish to NuGet
+      run: dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+      
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ steps.get_version.outputs.VERSION }}
+        draft: false
+        prerelease: false

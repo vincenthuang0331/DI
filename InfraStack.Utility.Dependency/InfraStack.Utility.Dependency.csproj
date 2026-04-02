@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <Version>1.0.0</Version>
+
+        <!-- NuGet Package Metadata -->
+        <PackageId>InfraStack.Utility.Dependency</PackageId>
+        <Authors>vincenthuang0331</Authors>
+        <Company>InfraStack</Company>
+        <Description>輕量級依賴注入工具庫，支援屬性/readonly 欄位注入</Description>
+        <PackageTags>dependency-injection;di;ioc;lightweight</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/vincenthuang0331/DI</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageProjectUrl>https://github.com/vincenthuang0331/DI</PackageProjectUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+</Project>
